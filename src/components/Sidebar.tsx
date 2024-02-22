@@ -130,9 +130,17 @@ export const TextElementPlaceHolder = () => {
 
 export const ImageElementPlaceHolder = () => {
   const onDragStart = (e: React.DragEvent) => {
-    e.dataTransfer.setData('element', ELEMENT_TYPE_ENUM.IMAGE);
+    e.dataTransfer.setData(
+      'element',
+      JSON.stringify({
+        type: ELEMENT_TYPE_ENUM.IMAGE,
+        styles: {},
+        contents: {},
+        id: `image-${Date.now()}`,
+        name: 'Image',
+      }),
+    );
   };
-
   return (
     <div
       className='h-10 py-2 px-4 bg-gray-100 rounded-md border border-gray-400 border-solid'

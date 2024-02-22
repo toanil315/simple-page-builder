@@ -1,14 +1,19 @@
-import { Element } from '@/interfaces';
-import Recursive from './Recursive';
-import { clsx } from 'clsx';
-import { usePageBuilderContext } from '@/contexts';
 import { EDITOR_ACTION_ENUM, ELEMENT_TYPE_ENUM, DEFAULT_STYLES } from '@/constants';
+import { usePageBuilderContext } from '@/contexts';
+import { Element, ImageContent } from '@/interfaces';
+import clsx from 'clsx';
+import React, { useMemo } from 'react';
 
 interface Props {
   element: Element;
 }
 
-const TwoColumns = ({ element }: Props) => {
+const IMAGE_PLACEHOLDER = {
+  src: 'https://placehold.jp/150x150.png',
+  alt: 'image placeholder',
+};
+
+const Image = ({ element }: Props) => {
   const { state, dispatch } = usePageBuilderContext();
 
   const handleClick = (e: React.MouseEvent) => {
@@ -21,10 +26,6 @@ const TwoColumns = ({ element }: Props) => {
     });
   };
 
-  const handleOnDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-  };
-
   const handleDelete = () => {
     dispatch({ type: EDITOR_ACTION_ENUM.DELETE_ELEMENT, payload: { element } });
   };
@@ -32,32 +33,25 @@ const TwoColumns = ({ element }: Props) => {
   return (
     <div
       style={{ ...DEFAULT_STYLES, ...element.styles }}
-      className={clsx('w-full min-h-[100px] rounded-md relative flex', {
-        'h-full': element.type === ELEMENT_TYPE_ENUM.BODY,
-        'h-fit': element.type === ELEMENT_TYPE_ENUM.CONTAINER,
+      className={clsx('rounded-md relative', {
         'border-2': !state.editor.liveMode,
-        'border-gray-400': !state.editor.liveMode,
         'border-dashed': !state.editor.liveMode,
-        'border-blue-500':
-          element.type === ELEMENT_TYPE_ENUM.CONTAINER &&
-          state.editor.selectedElement?.id === element.id &&
-          !state.editor.liveMode,
+        'border-blue-600':
+          state.editor.selectedElement?.id === element.id && !state.editor.liveMode,
       })}
       onClick={handleClick}
-      onDragOver={handleOnDragOver}
     >
-      {Array.isArray(element.contents) &&
-        element.contents.map((el) => (
-          <Recursive
-            key={el.id}
-            element={el}
-          />
-        ))}
+      <img
+        className='w-full h-full object-cover rounded-md'
+        src={(element.contents as ImageContent).src || IMAGE_PLACEHOLDER.src}
+        alt={(element.contents as ImageContent).alt || IMAGE_PLACEHOLDER.alt}
+      />
 
       <span
         className={clsx(
           'absolute top-0 transform -translate-y-1/2 left-2 px-2 font-medium text-white text-xs bg-blue-200 rounded-md z-50',
           {
+            '!block': !state.editor.liveMode && state.editor.selectedElement?.id === element.id,
             'bg-blue-500':
               state.editor.selectedElement?.id === element.id && !state.editor.liveMode,
           },
@@ -85,4 +79,4 @@ const TwoColumns = ({ element }: Props) => {
   );
 };
 
-export default TwoColumns;
+export default Image;

@@ -3,6 +3,7 @@ import { ELEMENT_TYPE_ENUM } from '@/constants';
 import Container from './Container';
 import TwoColumns from './TwoColumns';
 import Text from './Text';
+import Image from './Image';
 
 interface Props {
   element: Element;
@@ -23,7 +24,7 @@ const Recursive = ({ element }: Props) => {
       return <Text element={element} />;
 
     case ELEMENT_TYPE_ENUM.IMAGE:
-      return <div>image</div>;
+      return <Image element={element} />;
 
     default:
       return null;

@@ -4,7 +4,12 @@ export interface TextContent {
   innerText: string;
 }
 
-export type ElementContent = Element[] | TextContent;
+export interface ImageContent {
+  src: string;
+  alt: string;
+}
+
+export type ElementContent = Element[] | TextContent | ImageContent;
 
 export interface Element {
   id: string;
