@@ -1,7 +1,15 @@
-import { CreateSection } from '@/components/SeatEditor';
+import { Editor, Sidebar } from '@/components';
+import { PageBuilderProvider } from '@/contexts';
 
 const HomeContainer = () => {
-  return <CreateSection />;
+  return (
+    <PageBuilderProvider>
+      <div className='flex flex-row'>
+        <Editor />
+        <Sidebar />
+      </div>
+    </PageBuilderProvider>
+  );
 };
 
 export default HomeContainer;

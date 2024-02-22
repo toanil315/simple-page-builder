@@ -1,0 +1,7 @@
+export enum ELEMENT_TYPE_ENUM {
+  BODY = 'BODY',
+  CONTAINER = 'CONTAINER',
+  TEXT = 'TEXT',
+  IMAGE = 'IMAGE',
+  '2COLUMN' = '2COLUMN',
+}
