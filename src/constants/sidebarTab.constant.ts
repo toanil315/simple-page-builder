@@ -1,0 +1,4 @@
+export enum SIDEBAR_TAB_ENUM {
+  ELEMENTS = 'ELEMENTS',
+  SETTINGS = 'SETTINGS',
+}

@@ -1,11 +1,10 @@
-import { EDITOR_ACTION_ENUM, ELEMENT_TYPE_ENUM } from '@/constants';
+import { EDITOR_ACTION_ENUM, ELEMENT_TYPE_ENUM, SIDEBAR_TAB_ENUM } from '@/constants';
 import {
   AddElementAction,
   DeleteElementAction,
   Editor,
   EditorAction,
   Element,
-  ElementContent,
   HistoryStack,
   PageBuilderState,
   UpdateElementAction,
@@ -35,6 +34,7 @@ const initialHistoryStack: HistoryStack = {
 const initialState: PageBuilderState = {
   editor: initialEditorState,
   history: initialHistoryStack,
+  activeTab: SIDEBAR_TAB_ENUM.ELEMENTS,
 };
 
 const addElement = (elements: Element[], action: AddElementAction) => {
@@ -153,6 +153,7 @@ const pageBuilderReducer = (state: PageBuilderState, action: EditorAction): Page
           ...state.editor,
           selectedElement: action.payload.element,
         },
+        activeTab: SIDEBAR_TAB_ENUM.SETTINGS,
       };
 
       return newState;
@@ -205,6 +206,13 @@ const pageBuilderReducer = (state: PageBuilderState, action: EditorAction): Page
           ...state.editor,
           previewMode: action.payload.previewMode,
         },
+      };
+    }
+
+    case EDITOR_ACTION_ENUM.CHANGE_SIDEBAR_TAB: {
+      return {
+        ...state,
+        activeTab: action.payload.activeTab,
       };
     }
 

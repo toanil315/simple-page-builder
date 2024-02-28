@@ -1,5 +1,5 @@
 import { usePageBuilderContext } from '@/contexts';
-import Recursive from './Recursive';
+import Recursive from './elements/Recursive';
 
 const Editor = () => {
   const { state } = usePageBuilderContext();

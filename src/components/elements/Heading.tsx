@@ -1,16 +1,15 @@
 import { usePageBuilderContext } from '@/contexts';
 import clsx from 'clsx';
-import React, { useRef } from 'react';
+import React from 'react';
 import { EDITOR_ACTION_ENUM, DEFAULT_STYLES, ELEMENT_TYPE_ENUM } from '@/constants';
-import { Element, TextContent } from '@/interfaces';
+import { Element, HeadingContent, TextContent } from '@/interfaces';
 
 interface Props {
   element: Element;
 }
 
-const Text = ({ element }: Props) => {
+const Heading = ({ element }: Props) => {
   const { state, dispatch } = usePageBuilderContext();
-  const debounceRef = useRef<NodeJS.Timeout>();
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -22,31 +21,30 @@ const Text = ({ element }: Props) => {
     });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLDivElement>) => {
-    const updatedElement = {
-      ...element,
-      contents: {
-        ...element.contents,
-        innerText: e.target.innerText,
-      },
-    };
-
-    if (debounceRef.current) {
-      clearTimeout(debounceRef.current);
-    }
-
-    debounceRef.current = setTimeout(() => {
-      dispatch({
-        type: EDITOR_ACTION_ENUM.UPDATE_ELEMENT,
-        payload: {
-          element: updatedElement,
-        },
-      });
-    }, 300);
-  };
-
   const handleDelete = () => {
     dispatch({ type: EDITOR_ACTION_ENUM.DELETE_ELEMENT, payload: { element } });
+  };
+
+  const renderHeadingTag = () => {
+    const textContent = (element.contents as HeadingContent).innerText;
+    const headingTag = (element.contents as HeadingContent).as;
+    const styles = element.styles;
+    switch (headingTag) {
+      case 'h1':
+        return <h1 style={styles}>{textContent}</h1>;
+      case 'h2':
+        return <h2 style={styles}>{textContent}</h2>;
+      case 'h3':
+        return <h3 style={styles}>{textContent}</h3>;
+      case 'h4':
+        return <h4 style={styles}>{textContent}</h4>;
+      case 'h5':
+        return <h5 style={styles}>{textContent}</h5>;
+      case 'h6':
+        return <h6 style={styles}>{textContent}</h6>;
+      default:
+        return <h1 style={styles}>{textContent}</h1>;
+    }
   };
 
   return (
@@ -60,14 +58,7 @@ const Text = ({ element }: Props) => {
       })}
       onClick={handleClick}
     >
-      <div
-        contentEditable={true}
-        suppressContentEditableWarning={true}
-        onInput={handleChange}
-      >
-        {(element.contents as TextContent).innerText}
-      </div>
-
+      {renderHeadingTag()}
       <span
         className={clsx(
           'absolute top-0 transform -translate-y-1/2 left-2 px-2 font-medium text-white text-xs bg-blue-200 rounded-md z-50',
@@ -100,4 +91,4 @@ const Text = ({ element }: Props) => {
   );
 };
 
-export default Text;
+export default Heading;

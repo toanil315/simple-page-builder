@@ -4,7 +4,7 @@ import { PageBuilderProvider } from '@/contexts';
 const HomeContainer = () => {
   return (
     <PageBuilderProvider>
-      <div className='flex flex-row'>
+      <div className='flex flex-row mt-2'>
         <Editor />
         <Sidebar />
       </div>

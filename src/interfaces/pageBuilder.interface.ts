@@ -1,4 +1,4 @@
-import { ELEMENT_TYPE_ENUM } from '@/constants';
+import { EDITOR_ACTION_ENUM, ELEMENT_TYPE_ENUM, SIDEBAR_TAB_ENUM } from '@/constants';
 
 export interface TextContent {
   innerText: string;
@@ -9,7 +9,27 @@ export interface ImageContent {
   alt: string;
 }
 
-export type ElementContent = Element[] | TextContent | ImageContent;
+export interface ButtonContent {
+  innerText: string;
+}
+
+export interface HeadingContent {
+  innerText: string;
+  as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+}
+
+export interface LinkContent {
+  innerText: string;
+  href: string;
+}
+
+export type ElementContent =
+  | Element[]
+  | TextContent
+  | ImageContent
+  | ButtonContent
+  | HeadingContent
+  | LinkContent;
 
 export interface Element {
   id: string;
@@ -34,6 +54,7 @@ export interface HistoryStack {
 export interface PageBuilderState {
   editor: Editor;
   history: HistoryStack;
+  activeTab: SIDEBAR_TAB_ENUM;
 }
 
 export type AddElementAction = {
@@ -87,6 +108,11 @@ export type TogglePreviewModeAction = {
   };
 };
 
+export type ChangeSidebarTabAction = {
+  type: EDITOR_ACTION_ENUM.CHANGE_SIDEBAR_TAB;
+  payload: { activeTab: SIDEBAR_TAB_ENUM };
+};
+
 export type EditorAction =
   | AddElementAction
   | UpdateElementAction
@@ -95,4 +121,5 @@ export type EditorAction =
   | UndoAction
   | RedoAction
   | ToggleLiveModeAction
-  | TogglePreviewModeAction;
+  | TogglePreviewModeAction
+  | ChangeSidebarTabAction;
