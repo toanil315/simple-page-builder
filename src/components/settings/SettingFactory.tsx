@@ -4,6 +4,7 @@ import React from 'react';
 import ContainerSettings from './ContainerSettings';
 import TextSettings from './TextSettings';
 import ImageSettings from './ImageSetting';
+import HeadingSettings from './HeadingSettings';
 
 const SettingFactory = () => {
   const { state } = usePageBuilderContext();
@@ -23,6 +24,10 @@ const SettingFactory = () => {
 
     case ELEMENT_TYPE_ENUM.IMAGE: {
       return <ImageSettings />;
+    }
+
+    case ELEMENT_TYPE_ENUM.HEADING: {
+      return <HeadingSettings />;
     }
 
     default: {

@@ -1,5 +1,5 @@
 import { ELEMENT_TYPE_ENUM } from '@/constants';
-import { ButtonContent, HeadingContent, LinkContent } from '@/interfaces';
+import { ButtonContent, HeadingContent, ImageContent, LinkContent } from '@/interfaces';
 import React, { useMemo } from 'react';
 
 const ElementsTab = () => {
@@ -161,7 +161,10 @@ export const ImageElementPlaceHolder = () => {
       JSON.stringify({
         type: ELEMENT_TYPE_ENUM.IMAGE,
         styles: {},
-        contents: {},
+        contents: {
+          src: 'https://placehold.jp/150x150.png',
+          alt: 'image placeholder',
+        } as ImageContent,
         id: `image-${Date.now()}`,
         name: 'Image',
       }),

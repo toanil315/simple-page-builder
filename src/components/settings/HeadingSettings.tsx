@@ -1,10 +1,10 @@
 import { EDITOR_ACTION_ENUM } from '@/constants';
 import { usePageBuilderContext } from '@/contexts';
-import { ImageContent } from '@/interfaces';
+import { HeadingContent, ImageContent } from '@/interfaces';
 import React from 'react';
 import GeneralStyleSetting from './GeneralStyleSetting';
 
-const ImageSettings = () => {
+const HeadingSettings = () => {
   const { state, dispatch } = usePageBuilderContext();
   const { selectedElement } = state.editor;
   const debounceRef = React.useRef<NodeJS.Timeout>();
@@ -52,31 +52,45 @@ const ImageSettings = () => {
   return (
     <div className='flex flex-col gap-4 pt-2 pb-4'>
       <div className='w-full'>
-        <label htmlFor='src'>Image Source</label>
+        <label htmlFor='innerText'>Inner Text</label>
         <input
           className='w-full p-2 rounded-md border border-gray-200 border-solid'
-          key={(selectedElement?.contents as ImageContent).src}
+          key={(selectedElement?.contents as HeadingContent).innerText}
           type='string'
-          name='src'
-          defaultValue={(selectedElement?.contents as ImageContent).src}
+          name='innerText'
+          defaultValue={(selectedElement?.contents as HeadingContent).innerText}
           onChange={handleChangeContent}
         />
       </div>
       <div className='w-full'>
-        <label htmlFor='alt'>Alt</label>
+        <label htmlFor='as'>Heading Type</label>
         <input
           className='w-full p-2 rounded-md border border-gray-200 border-solid'
-          key={(selectedElement?.contents as ImageContent).alt}
+          key={(selectedElement?.contents as HeadingContent).as}
           type='string'
-          name='alt'
-          defaultValue={(selectedElement?.contents as ImageContent).alt}
+          name='as'
+          defaultValue={(selectedElement?.contents as HeadingContent).as}
           onChange={handleChangeContent}
         />
       </div>
       <hr className='my-2' />
       {selectedElement && (
         <GeneralStyleSetting
-          enabledSettings={['display', 'padding', 'margin', 'width', 'height', 'objectFit']}
+          enabledSettings={[
+            'color',
+            'fontSize',
+            'fontWeight',
+            'lineHeight',
+            'letterSpacing',
+            'padding',
+            'margin',
+            'width',
+            'height',
+            'display',
+            'borderWidth',
+            'borderStyle',
+            'borderColor',
+          ]}
           selectedElement={selectedElement}
           onStyleChange={handleChangeStyle}
         />
@@ -85,4 +99,4 @@ const ImageSettings = () => {
   );
 };
 
-export default ImageSettings;
+export default HeadingSettings;
